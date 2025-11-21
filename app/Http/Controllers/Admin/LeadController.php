@@ -30,7 +30,8 @@ class LeadController extends Controller
             ->addColumn('name', function (Contact $data) {
                 $name = '<p class="mb-0"><b>Name: </b>'.$data->name.'</p>'; 
                 $email = '<p class="mb-0"><b>Email: </b>'.$data->email.'</p>'; 
-                return $name.  $email;
+                $location = '<p class="mb-0"><b>Location: </b>'.$data->location.'</p>'; 
+                return $name.  $email . $location;
             })
 
              ->addColumn('status', function(Contact $data)  {
