@@ -53,11 +53,10 @@
   }
 
   .hero-section {
-       padding: 50px 0;
-    background-image: url(../images/hero_bg.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+      padding: 50px 0;
+      background-image: url(../images/hero_bg1.png);
+      background-size: contain;
+      background-repeat: no-repeat;
   }
 
   .hero-wrapper {
@@ -71,7 +70,7 @@
 
   /* LEFT IMAGE */
   .hero-image {
-      width: 50%; 
+      width: 50%;
       /* background-image: url("assets/images/hero_bg.png"); your left-side showroom image */
       background-size: cover;
       background-position: center;
@@ -151,14 +150,15 @@
 
   /* slider section  */
   .product-portfolio {
-      padding: 50px 0;
       text-align: center;
   }
 
-  .portfolio-title {
+  .border-heading {
       font-size: 34px;
       font-weight: 700;
   }
+
+
 
   .product-slider .item {
       position: relative;
@@ -174,14 +174,14 @@
   .product-title {
       background: #f3f3f3;
       padding: 12px 0;
-      font-size: 18px;
+      font-size: 12px;
       font-weight: 600;
       color: #ff4d00;
       position: absolute;
       bottom: -25px;
       left: 50%;
       right: 0px;
-      width: 78%;
+      width: 92%;
       transform: translateX(-50%);
   }
 
@@ -198,22 +198,270 @@
       overflow: unset !important
   }
 
+  .border-heading {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+  }
 
-  @media (max-width: 768px){
-    .navbar ul{
-        display: none;
-    }
-    .logo img {
-        height: 30px;
-    }
+  p.testimonial-tooltip {
+      background: #e2e2e2;
+      padding: 15px;
+      height: auto;
+      margin-top: 31px;
+      position: relative;
+  }
 
-    .hero-wrapper { 
-        flex-direction: column;
-    }
-    .hero-image {
-        width: 100%;
-    }
-    .hero-form {
-        width: 100%;
-    }
+  p.testimonial-tooltip::before {
+      content: "";
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 15px;
+      border-style: solid;
+      border-color: transparent transparent #e2e2e2 transparent;
+  }
+
+  .border-heading::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      /* underline width */
+      height: 3px;
+      /* underline thickness */
+      background: #ff4d00;
+      /* underline color */
+      border-radius: 5px;
+  }
+
+  .text-orange {
+      color: #ff5e14;
+      /* Adjust based on your brand color */
+  }
+
+  .shadow-sm {
+      border: 1px solid #f0f0f0;
+  }
+
+  .our-store h5 {
+      font-size: 15px;
+  }
+
+  .brand-card {
+      width: 180px;
+      height: 110px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      border-radius: 10px;
+  }
+
+  .brand-arrow {
+      background: #fff;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+  }
+
+  .brand-arrow:hover {
+      background: #ff6f00;
+      color: #fff;
+  }
+
+  .locality-tag {
+      background: #ff6f00;
+      color: black;
+      padding: 6px 14px;
+      font-size: 18px;
+      border-radius: 6px;
+  }
+
+  .contact-btn {
+      background: #000;
+      color: #fff;
+      border: 4px solid #ff6f00;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      transition: 0.3s ease;
+  }
+
+  .contact-btn:hover {
+      background: #ff6f00;
+      color: #000;
+      border-color: #000;
+  }
+
+  .blog-card img {
+      height: 180px;
+      object-fit: cover;
+  }
+
+  .text-orange {
+      color: #ff6f00;
+  }
+
+  .view-blogs-btn {
+      border: 2px solid #ff6f00;
+      border-radius: 8px;
+      color: #ff6f00;
+      font-weight: 600;
+      background: transparent;
+      transition: 0.3s;
+  }
+
+  .view-blogs-btn:hover {
+      background: #ff6f00;
+      color: #fff;
+  }
+
+  /* Custom Styles */
+  .btn-orange {
+      background-color: #ff5c00;
+      color: white;
+  }
+
+  .btn-orange:hover {
+      background-color: #e04b00;
+      color: white;
+  }
+
+  .tag-btn {
+      border: 1px solid #ff5c00;
+      background: transparent;
+      color: #000000;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 7px;
+      cursor: pointer;
+  }
+
+  .tag-btn:hover {
+      background-color: #ff5c00;
+      color: white;
+  }
+
+  /* Footer styles */
+
+  footer {
+      background: #f3f3f3;
+  }
+
+  .footer {
+      font-size: 0.85rem;
+      color: #6c757d;
+      padding-top: 2rem;
+      margin-top: 3rem;
+  }
+
+  .footer a {
+      color: #6d767f;
+      text-decoration: none;
+  }
+
+  footer .footer-logo {
+      font-size: 1.3rem;
+  }
+
+  footer ul.social-nav li {
+      list-style-type: none;
+      background: #4b5058;
+      color: white;
+      padding: 3px 8px;
+  }
+
+  footer ul.social-nav {
+      gap: 10px;
+  }
+
+  .footer-title::before {
+      content: "";
+      position: absolute;
+      bottom: -9px;
+      left: 29px;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: #babcbe;
+      border-radius: 5px;
+  }
+
+  .footer-title {
+      position: relative;
+  }
+
+  .footer a:hover {
+      text-decoration: underline;
+  }
+
+  .footer .footer-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #7f7f7f;
+  }
+
+  /* Small icon with text */
+  .icon-text {
+      font-size: 0.75rem;
+      color: #6c757d;
+      margin-top: 0.5rem;
+  }
+
+  .blog-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      box-shadow: 0 0 7px #939393;
+  }
+
+  .blog-card p {
+      text-align: left;
+  }
+
+  .theme-color {
+      color: #ff6f00;
+  }
+
+  .testimonial-section .owl-carousel .owl-item img { 
+      width: 80px;
+      height: 80px;
+      margin: auto;
+  }
+
+  @media (max-width: 768px) {
+      .navbar ul {
+          display: none;
+      }
+
+      .logo img {
+          height: 30px;
+      }
+
+      .hero-wrapper {
+          flex-direction: column;
+          margin-top: 97px;
+      }
+
+      .hero-image {
+          width: 100%;
+      }
+
+      .hero-form {
+          width: 100%;
+      }
+
+      .border-heading {
+          font-size: 24px;
+          font-weight: 700;
+      }
   }
