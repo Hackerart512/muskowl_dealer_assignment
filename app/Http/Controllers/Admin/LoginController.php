@@ -27,7 +27,6 @@ class LoginController extends Controller
 
   public function login(Request $request)
   {
-    //--- Validation Section
     $rules = [
       'email'   => 'required|email',
       'password' => 'required'
@@ -36,25 +35,41 @@ class LoginController extends Controller
     $validator = Validator::make($request->all(), $rules);
 
     if ($validator->fails()) {
-      return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+      return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
     }
-    //--- Validation Section Ends
 
-    // Attempt to log the user in
-    if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-      // if successful, then redirect to their intended location
+    // Get admin by email
+    $admin = Admin::where('email', $request->email)->first();
+
+    if (!$admin) {
+      return response()->json(['errors' => [0 => 'Invalid email or password']]);
+    }
+
+    $inputPassword = $request->password;
+    $storedPassword = $admin->password;
+
+    // CASE 1: Password is bcrypt hashed → use Hash::check
+    if (strlen($storedPassword) > 20 && Hash::check($inputPassword, $storedPassword)) {
+      Auth::guard('admin')->login($admin);
       return redirect()->route('admin.dashboard');
     }
 
-    // if unsuccessful, then redirect back to the login with the form data
-    return response()->json(array('errors' => [0 => 'Credentials Doesn\'t Match !']));
+    // CASE 2: Password is stored as plain text → compare directly
+    if ($storedPassword === $inputPassword) {
+      Auth::guard('admin')->login($admin);
+      return redirect()->route('admin.dashboard');
+    }
+
+    // Otherwise login failed
+    return response()->json(['errors' => [0 => 'Credentials Doesn\'t Match !']]);
   }
+
 
   public function showForgotForm()
   {
     return view('admin.forgot');
   }
- 
+
   public function logout()
   {
     Auth::guard('admin')->logout();
