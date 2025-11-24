@@ -1,33 +1,25 @@
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
-    git \
-    curl
+    zip unzip git curl \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install pdo pdo_mysql gd
 
-RUN docker-php-ext-install pdo pdo_mysql gd
+RUN a2enmod rewrite
 
-# Install composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-# Copy project files
 COPY . .
 
-# Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Give permissions
 RUN chmod -R 775 storage bootstrap/cache
+
+RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 8080
 
-# Start Laravel
-CMD php artisan serve --host 0.0.0.0 --port 8080
+CMD ["apache2-foreground"]
