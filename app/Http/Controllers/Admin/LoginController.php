@@ -25,43 +25,62 @@ class LoginController extends Controller
     return view('admin.login');
   }
 
+  // Railway database not working 
+  // public function login(Request $request)
+  // {
+  //   //--- Validation Section
+  //   $rules = [
+  //     'email'   => 'required|email',
+  //     'password' => 'required'
+  //   ];
+
+  //   $validator = Validator::make($request->all(), $rules);
+
+  //   if ($validator->fails()) {
+  //     return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+  //   }
+  //   //--- Validation Section Ends
+
+  //   // Attempt to log the user in
+  //   if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+  //     // if successful, then redirect to their intended location
+  //     return redirect()->route('admin.dashboard');
+  //   }
+
+  //   // if unsuccessful, then redirect back to the login with the form data
+  //   return response()->json(array('errors' => [0 => 'Credentials Doesn\'t Match !']));
+  // }
+
   public function login(Request $request)
   {
-    $rules = [
-      'email'   => 'required|email',
-      'password' => 'required'
-    ];
+      // Validation
+      $rules = [
+          'email'   => 'required|email',
+          'password' => 'required'
+      ];
 
-    $validator = Validator::make($request->all(), $rules);
+      $validator = Validator::make($request->all(), $rules);
 
-    if ($validator->fails()) {
-      return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
-    }
+      if ($validator->fails()) {
+          return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
+      }
 
-    // Get admin by email
-    $admin = Admin::where('email', $request->email)->first();
+      // Get admin record manually
+      $admin = \App\Models\Admin::where('email', $request->email)->first();
 
-    if (!$admin) {
-      return response()->json(['errors' => [0 => 'Invalid email or password']]);
-    }
+      if (!$admin) {
+          return response()->json(['errors' => [0 => 'Invalid Email !']]);
+      }
 
-    $inputPassword = $request->password;
-    $storedPassword = $admin->password;
+      // ⚠️ Plain Text Compare (NO HASH)
+      if ($admin->password !== $request->password) {
+          return response()->json(['errors' => [0 => 'Invalid Password !']]);
+      }
 
-    // CASE 1: Password is bcrypt hashed → use Hash::check
-    if (strlen($storedPassword) > 20 && Hash::check($inputPassword, $storedPassword)) {
+      // Manual login (bypass bcrypt system)
       Auth::guard('admin')->login($admin);
-      return redirect()->route('admin.dashboard');
-    }
 
-    // CASE 2: Password is stored as plain text → compare directly
-    if ($storedPassword === $inputPassword) {
-      Auth::guard('admin')->login($admin);
       return redirect()->route('admin.dashboard');
-    }
-
-    // Otherwise login failed
-    return response()->json(['errors' => [0 => 'Credentials Doesn\'t Match !']]);
   }
 
 
@@ -69,7 +88,7 @@ class LoginController extends Controller
   {
     return view('admin.forgot');
   }
-
+ 
   public function logout()
   {
     Auth::guard('admin')->logout();
